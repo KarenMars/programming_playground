@@ -60,6 +60,54 @@ void print_data_seqlist(seqlist_t *l)
     return;
 }
 
+int is_empty_seqlist(seqlist_t *l)
+{
+    if (l->n == 0)
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
+}
+
+int delete_data_seqlist(seqlist_t *l, char *str)
+{
+    int res, i, j;
+
+    res = is_empty_seqlist(l);
+
+    if (res == 0)
+    {
+        printf("The seqlist is empty!\n");
+        return 0;
+    }
+
+    i = 0;
+    j = 0;
+
+    for (i = 0; i < l->n; i++)
+    {
+        int temp;
+        temp = strcmp(str, l->buf[i].name);
+        if (temp != 0)
+        {
+            l->buf[j] = l->buf[i];
+            j++;
+        }
+    }
+
+    if ( i == j)
+    {
+        printf("The item does not exist\n");
+        return 2;
+    }
+
+    printf("Delete successfully\n");
+    return 1;
+}
+
 int main()
 {
     seqlist_t *l = NULL;
@@ -79,6 +127,11 @@ int main()
     }
 
     print_data_seqlist(l);
+
+    int temp = 0;
+
+    temp = delete_data_seqlist(l, "Jack");
+
     free(l);
     l = NULL;
     return 0;
